@@ -1,0 +1,50 @@
+import datetime
+from django.db import models
+from django.utils import timezone
+
+class Article(models.Model):
+    customer = models.CharField(max_length=50)
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length = 50)
+    topic = models.CharField(max_length = 50)
+    pub_date = models.DateTimeField('date published')
+    last_updated = models.DateTimeField('last updated')
+
+    def __str__(self):
+        headline = self.title + ", " + self.author + "\n"
+        body = "Published by " + self.customer + " in " + self.topic + "\n"
+        tail = "Published: " + self.pub_date + " Last updated: " + self.last_updated + "\n"
+
+        return headline + body + tail
+
+class User(models.Model):
+    email = models.CharField(max_length=50)
+    hash_code = models.CharField(max_length=50)
+    password = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    admin = models.BooleanField(initial=False)
+
+    def __str__(self):
+        return self.hash_code
+
+class Comment(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment_type = models.IntegerField()
+    content = models.CharField(max_length=140)
+    parent = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    flag = models.BooleanField(initial=False)
+    pub_date = models.DateTimeField('date published')
+
+    def __str__(self):
+        headline = self.user + " " + self.pub_date + "\n"
+        if(self.flag == False):
+            body = self.content + "\n"
+        else:
+            body = "[Comment flagged for review by moderator \n]"
+        return headline + body
+
+class flag_dict(models.Model):
+    word = models.CharField(max_length=50)
+
+

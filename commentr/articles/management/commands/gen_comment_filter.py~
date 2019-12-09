@@ -1,0 +1,22 @@
+from django.core.management.base import BaseCommand, CommandError
+from articles.models import Article
+import hashlib
+
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        emails = ["mike.tyson@gmail.com"]
+        country = ["USA", "Algeria", "Austraila"]
+
+        for email in emails:
+            u = User()
+            u.hash_code = hashlib.md5(bytes(email, "ascii")).hexdigest
+            u.password = "password"
+            u.country = random.choice(country)
+            u.email = email
+
+            u.save()
+
+        print(str(len(titles)) + " users added")
+
+

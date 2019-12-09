@@ -1,0 +1,60 @@
+from django.core.management.base import BaseCommand, CommandError
+from articles.models import Article, Comment, Filter_Words, User
+
+from django.utils import timezone
+import random
+import time
+import re
+
+def str_time_prop(start, end, format, prop):
+    """Get a time at a proportion of a range of two formatted times.
+
+    start and end should be strings specifying times formated in the
+    given format (strftime-style), giving an interval [start, end].
+    prop specifies how a proportion of the interval to be taken after
+    start.  The returned time will be in the specified format.
+    """
+
+    stime = time.mktime(time.strptime(start, format))
+    etime = time.mktime(time.strptime(end, format))
+
+    ptime = stime + prop * (etime - stime)
+
+    return time.localtime
+
+
+def random_date(start, end, prop):
+    return str_time_prop(start, end, '%m/%d/%Y %I:%M %p', prop)
+
+
+class Command(BaseCommand):
+    def handle(self, *args, **options):
+        users = User.objects.all()
+        articles = Article.objects.all()
+        filter_words = Filter_Words.objects.all()
+
+        content = ["This is very unfortunate", "Fuck this"]
+
+
+        for i in range(0,100):
+            comments = Comment.objects.all()
+            c = Comment()
+            c.user = random.choice(users)
+            c.article = random.choice(articles)
+            c.content = random.choice(content)
+            c.pub_date = timezone.now()
+            for word in filter_words:
+                if(re.search(str(word), c.content, re.IGNORECASE)):
+                    c.flag = True
+
+
+            if(i > 80):
+                c.parent = random.choice(comments)
+                c.article = c.parent.article
+
+            c.save()
+            #print(c)
+
+        print(str(100) + " comments added")
+
+
