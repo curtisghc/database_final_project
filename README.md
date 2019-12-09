@@ -1,4 +1,5 @@
 ## Database final project
+Commentr is an app that generates articles, and populates them with comments using python3 and the Django framework
 
 Additionally, it provides functionality for comment replies, a profanity filter with a modqueue for review restricted to admin access, and a billing feature.
 Generation of elements is modable using plaintext dictionaries.
