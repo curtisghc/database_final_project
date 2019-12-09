@@ -1,4 +1,4 @@
-##Database final project
+## Database final project
 
 Additionally, it provides functionality for comment replies, a profanity filter with a modqueue for review restricted to admin access, and a billing feature.
 Generation of elements is modable using plaintext dictionaries.
