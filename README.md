@@ -6,27 +6,20 @@ Generation of elements is modable using plaintext dictionaries.
 
 Command summary follows:
 
-Delete all database tables:
-"python3 manage.py flush"
+|Command | Description|
+|-|-|
+|`python3 manage.py flush`| Delete all database tables |
+|`python3 manage.py gen_everything`| Generate new tables |
+|`python3 manage.py gen_comments`| Add more comments |
+|`python3 manage.py comments_queue`| Access mod queue |
+|`python3 manage.py bill_companies`| Calculate billing to companies |
+|`python3 manage.py runserver`| Start webserver |
 
-Generate new tables
-"python3 manage.py gen_everything"
+By default, this web app runs at
 
-Add more comments
-"python3 manage.py gen_comments"
+`localhost:8000/articles`
 
-Access mod queue
-"python3 manage.py comments_queue"
-
-Calculate billing to companies
-"python3 manage.py bill_companies"
 
 Dictionaries available in
-"./dictionaries"
 
-Start server
-"python3 manage.py runserver"
-
-By default, this web runs at
-"localhost:8000/articles"
-
+`./dictionaries`
